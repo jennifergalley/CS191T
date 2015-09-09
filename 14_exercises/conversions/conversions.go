@@ -17,5 +17,12 @@ func main () {
 	//string to []byte
 	myString := "hello world"
 	fmt.Println([]byte(myString))
+	
+	//Review Questions
+	fmt.Println(string('a'))
+	fmt.Println(string([]byte{'h','e','l','l','o'}))
+	fmt.Println([]byte("Hello"))
+	fmt.Println(float64(12))
+	fmt.Println(int(12.1230123))
 
 }

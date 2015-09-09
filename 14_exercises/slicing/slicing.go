@@ -3,6 +3,7 @@ import "fmt"
 
 func main () {
 	myName := "Jennifer"
-	fmt.Print (myName[:5])
+	fmt.Println(myName[3])
+	fmt.Println(myName[:5])
 }
 
