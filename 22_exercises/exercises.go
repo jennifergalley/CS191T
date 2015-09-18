@@ -3,9 +3,16 @@ import (
 	"fmt"
 	"strings"
 	"math"
+	"io"
 	"io/ioutil"
 	"bufio"
 	"os"
+	"encoding/csv"
+	"strconv"
+	"crypto/md5"
+	"path/filepath"
+	"html/template"
+	"encoding/hex"
 )
 
 /*
@@ -200,6 +207,365 @@ func capitalizeOddWords (filename string) {
     }
 }
 
+/*
+Count how many times the word “whale” is used in Herman Melville’s novel, “Moby Dick” (927 pages).
+*/
+func countWhale () int {
+	file, _ := os.Open("mobyDick.txt")
+    fscanner := bufio.NewScanner(file)
+	count := 0
+	
+    for fscanner.Scan() {
+		line := fscanner.Text()
+		words := strings.Fields(line)
+		for _, w := range words {
+			if w == "whale" {
+				count++
+			}
+		}
+    }
+	
+	return count
+}
+
+/*
+Find the longest word (string of runes not separated by spaces) used in “Moby Dick”.
+*/
+func longestWord () string {
+	file, _ := os.Open("mobyDick.txt")
+    fscanner := bufio.NewScanner(file)
+	max := 0
+	longestWord := ""
+	
+    for fscanner.Scan() {
+		line := fscanner.Text()
+		words := strings.Fields(line)
+		for _, w := range words {
+			if len(w) > max {
+				max = len(w)
+				longestWord = w
+			}
+		}
+    }
+	
+	return longestWord
+}
+
+/*
+Create your own version of cat which reads an unlimited number of file and dumps their contents to stdout.
+*/
+func catMany (files ...string) {
+	for _, filename := range files {
+		contents, err := ioutil.ReadFile (filename)
+		if err != nil {
+			fmt.Println("error reading file")
+		} else {
+			fmt.Println(string(contents))	
+		}
+	}
+}
+
+/*
+implement a program which 
+	parses all of the csv file
+	prints the following fields for each state:
+		id 				int 
+		name 			string 
+		abbreviation 		string 
+		censusRegionName 	string 
+Make sure to use a struct in your program 
+*/
+type State struct {
+	Id 					int 
+	Name 				string 
+	Abbreviation 		string 
+	CensusRegionName 	string 
+}
+
+func printCSV () {
+	file, _ := os.Open("state_table.csv")
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	reader.FieldsPerRecord = -1
+	data, _ := reader.ReadAll()
+
+	var state State
+	for _, each := range data {
+		state.Id, _ = strconv.Atoi(each[0])
+		state.Name = each[1]
+		state.Abbreviation = each[2]
+		state.CensusRegionName = each[3]
+		fmt.Println(state)
+	}
+}
+
+/*
+implement a program which 
+parses all of the csv file
+prints the following fields for each state:
+id 				int 
+name 			string 
+abbreviation 		string 
+censusRegionName 	string 
+Make sure to use a struct in your program 
+accept a state abbreviation from the user
+display only the requested state
+*/
+func printCSVbyState (abbr string) {
+	file, _ := os.Open("state_table.csv")
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	reader.FieldsPerRecord = -1
+	data, _ := reader.ReadAll()
+
+	var state State
+	allStates := make(map[string]State)
+	for _, each := range data {
+		state.Id, _ = strconv.Atoi(each[0])
+		state.Name = each[1]
+		state.Abbreviation = each[2]
+		state.CensusRegionName = each[3]
+		allStates[state.Abbreviation] = state
+	}
+	fmt.Println(allStates[abbr])
+}
+/*
+implement a program which 
+parses all of the csv file
+prints the following fields for each state:
+id 				int 
+name 			string 
+abbreviation 		string 
+censusRegionName 	string 
+Make sure to use a struct in your program 
+accept a state abbreviation from the user
+write the requested state into an html file
+*/
+func printCSVbyStateHTML (abbr string) {
+	file, _ := os.Open("state_table.csv")
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	reader.FieldsPerRecord = -1
+	data, _ := reader.ReadAll()
+
+	var state State
+	allStates := make(map[string]State)
+	for _, each := range data {
+		state.Id, _ = strconv.Atoi(each[0])
+		state.Name = each[1]
+		state.Abbreviation = each[2]
+		state.CensusRegionName = each[3]
+		allStates[state.Abbreviation] = state
+	}
+	
+	t, _ := template.New("tpl").Parse(`
+	{{define "State"}}
+		<table>
+			<tr>
+				<td>ID</td>
+				<td>{{ .Id }}</td>
+			</tr>
+			<tr>
+				<td>Name</td>
+				<td>{{ .Name }}</td>
+			</tr>
+			<tr>
+				<td>Abbreviation</td>
+				<td>{{ .Abbreviation }}</td>
+			</tr>
+			<tr>
+				<td>Census Region Name</td>
+				<td>{{ .CensusRegionName }}</td>
+			</tr>
+		</table>
+	{{end}}
+	`)
+	out, _ := os.Create("myHTMLfile.html")
+	_ = t.ExecuteTemplate(out, "State", allStates[abbr])
+}
+
+
+/*
+Grab historical financial data from Yahoo as a csv file
+http://finance.yahoo.com/q/hp?s=GOOG+Historical+Prices) 
+read that file
+print content from each record to standard out
+*/
+type Price struct {
+	Date string
+	Open float64
+	High float64
+	Low float64
+	Close float64
+	Volume int
+	AdjClose float64
+}
+
+func printCSV2 () {
+	file, _ := os.Open("table.csv")
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	reader.FieldsPerRecord = -1
+	data, _ := reader.ReadAll()
+
+	var price Price
+	for _, each := range data {
+		price.Date = each[0]
+		price.Open, _ = strconv.ParseFloat(each[1], 64)
+		price.High, _ = strconv.ParseFloat(each[2], 64)
+		price.Low, _ = strconv.ParseFloat(each[3], 64)
+		price.Close, _ = strconv.ParseFloat(each[4], 64)
+		price.Volume, _ = strconv.Atoi(each[5])
+		price.AdjClose, _ = strconv.ParseFloat(each[6], 64)
+		fmt.Println(price)
+	}
+}
+/*
+Grab historical financial data from Yahoo as a csv file
+http://finance.yahoo.com/q/hp?s=GOOG+Historical+Prices) 
+read that file
+print content from each record to an html table
+*/
+func printCSVbyStateHTML2 () {
+	file, _ := os.Open("table.csv")
+	defer file.Close()
+
+	reader := csv.NewReader(file)
+	reader.FieldsPerRecord = -1
+	data, _ := reader.ReadAll()
+
+	var price Price
+	var prices []Price
+	for _, each := range data {
+		price.Date = each[0]
+		price.Open, _ = strconv.ParseFloat(each[1], 64)
+		price.High, _ = strconv.ParseFloat(each[2], 64)
+		price.Low, _ = strconv.ParseFloat(each[3], 64)
+		price.Close, _ = strconv.ParseFloat(each[4], 64)
+		price.Volume, _ = strconv.Atoi(each[5])
+		price.AdjClose, _ = strconv.ParseFloat(each[6], 64)
+		prices = append(prices, price)
+	}
+	
+	t, _ := template.New("tpl2").Parse(`
+	{{define "Price"}}
+		<table>
+			{{ range . }}
+			<tr>
+				<td>Date</td>
+				<td>{{ .Date }}</td>
+			</tr>
+			<tr>
+				<td>Open</td>
+				<td>{{ .Open }}</td>
+			</tr>
+			<tr>
+				<td>High</td>
+				<td>{{ .High }}</td>
+			</tr>
+			<tr>
+				<td>Low</td>
+				<td>{{ .Low }}</td>
+			</tr>
+			<tr>
+				<td>Close</td>
+				<td>{{ .Close }}</td>
+			</tr>
+			<tr>
+				<td>Volume</td>
+				<td>{{ .Volume }}</td>
+			</tr>
+			<tr>
+				<td>AdjClose</td>
+				<td>{{ .AdjClose }}</td>
+			</tr>
+			{{ end }}
+		</table>
+	{{end}}
+	`)
+	out, _ := os.Create("myHTMLfile2.html")
+	_ = t.ExecuteTemplate(out, "Price", prices[1:])
+}
+
+/*
+Create a program which finds the md5 checksum of a file. 
+at the terminal
+go install
+yourProgramName yourFileNameToCheckSum
+should return a large hexadecimal number like ‘d47c2bbc28298ca9befdfbc5d3aa4e65’
+*/
+func hashFile (filename string) string {
+	contents, err := ioutil.ReadFile (filename)
+	if err != nil {
+		panic(err)
+	}
+
+	h := md5.New()
+	io.WriteString(h, string(contents))
+	return fmt.Sprintf("%x", h.Sum(nil))
+}
+
+/*
+Create a program which finds the md5 checksum of all of the files in a directory.
+*/
+func hashDir (dirname string) {
+	filepath.Walk(dirname, func (path string, info os.FileInfo, err error) error {
+		if info.IsDir() {
+			return nil
+		}
+		h := hashFile(path)
+		fmt.Println(h)
+		return nil
+	})
+}
+/*
+Create a program which
+you run from the command line
+reads user information (at least name and email) from the command line (os.Args[1])
+creates an HTML page
+generates a profile image from gravatar.com
+gravatar hash
+gravatar image
+part of your solution should include this code:
+h := md5.New() 
+io.WriteString(h, email) 
+finalBytes := h.Sum(nil) 
+finalString := hex.EncodeToString(finalBytes) 
+*/
+type Person struct {
+	Name string
+	Email string
+}
+func gravatar () {
+	var name, email string
+	
+	fmt.Println("Please enter your first name")
+	fmt.Scanln(&name)
+
+	fmt.Println("Please enter your email")
+	fmt.Scanln(&email)
+	
+	email = strings.ToLower(email)
+	
+	h := md5.New() 
+	io.WriteString(h, email) 
+	finalBytes := h.Sum(nil) 
+	finalString := hex.EncodeToString(finalBytes) 
+	
+	//generate page
+	t, _ := template.New("tpl3").Parse(`
+	{{define "Gravatar"}}
+		<h1>{{.Name}}</h1>
+		<img src="http://www.gravatar.com/avatar/{{.Email}}"/>
+	{{end}}
+	`)
+	out, _ := os.Create("myGravatar.html")
+	_ = t.ExecuteTemplate(out, "Gravatar", Person{name, finalString})
+}
 
 
 func main () {
@@ -248,5 +614,50 @@ func main () {
 	
 	fmt.Println("capitalizeOddWords")
 	capitalizeOddWords("test.txt")
+	fmt.Println()
+	
+	fmt.Println("Whale Count in Moby Dick")
+	fmt.Println(countWhale())
+	fmt.Println()
+	
+	
+	fmt.Println("Longest Word in Moby Dick")
+	fmt.Println(longestWord())
+	fmt.Println()
+	
+	fmt.Println("Cat Many")
+	catMany("test.txt", "newFile.txt", "test-copy.txt")
+	fmt.Println()
+	
+	fmt.Println("Print CSV")
+	printCSV()
+	fmt.Println()
+	
+	fmt.Println("Print CSV by state abbr")
+	printCSVbyState("CA")
+	fmt.Println()
+	
+	fmt.Println("Print CSV2")
+	printCSV2()
+	fmt.Println()
+	
+	fmt.Println("Hash file")
+	fmt.Println(hashFile("test.txt"))
+	fmt.Println()
+	
+	fmt.Println("Hash Dir")
+	hashDir(".")
+	fmt.Println()
+	
+	fmt.Println("Print CSV by state abbr to HTML")
+	printCSVbyStateHTML("WA")
+	fmt.Println()
+	
+	fmt.Println("Print CSV prices to HTML")
+	printCSVbyStateHTML2()
+	fmt.Println()
+	
+	fmt.Println("Gravatar")
+	gravatar()
 	fmt.Println()
 }
