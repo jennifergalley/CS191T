@@ -15,6 +15,8 @@
 <link href="/public/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
+<link href="/public/css/global.css" rel="stylesheet">
+<link href="/public/css/cover.css" rel="stylesheet">
 <link href="/public/css/blog.css" rel="stylesheet">
 <link href="/public/css/login.css" rel="stylesheet">
 
@@ -36,8 +38,14 @@
 
 <body>
 
+  {{ template "navbar" }}
+
+{{ end }}
+
+
+{{ define "navbar" }}
 <div class="blog-masthead">
-  <span class="collabowrite">Collabowrite</span>
+  <a href="/"><span class="collabowrite">Collabowrite</span></a>
   <div class="container nav-container">
     <nav class="blog-nav">
       <!--Use class "active" to change pointer on navbar-->
@@ -45,17 +53,12 @@
       <a class="blog-nav-item" href="/view" id="view">View</a>
       <a class="blog-nav-item" href="/write" id="write">Write</a>
       <a class="blog-nav-item" href="/profile" id="profile">Profile</a>
-      <a class="signup" href="/signup" id="signup">
-        <button class="btn btn-success">Sign Up</button>
-      </a>
-      <a class="login" href="/login" id="login">
-        <button class="btn btn-primary">Login</button>
-      </a>
+      <a class="signup btn btn-success" href="/signup" id="signup">Signup</a>
+      <a class="login btn btn-primary" href="/login" id="login">Login</a>
     </nav>
   </div>
 </div>
 {{ end }}
-
 
 
 {{ define "footer" }}

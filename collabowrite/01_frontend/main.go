@@ -11,7 +11,7 @@ var tpl *template.Template
 func init() {
 	r := httprouter.New()
 	http.Handle("/", r)
-	r.GET("/", view) //landing page
+	r.GET("/", cover)
 	r.GET("/browse", browse)
 	r.GET("/view", view)
 	r.GET("/write", write)
@@ -46,4 +46,8 @@ func login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 
 func signup(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	tpl.ExecuteTemplate(res, "signup.html", nil)
+}
+
+func cover(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
+	tpl.ExecuteTemplate(res, "cover.html", nil)
 }
