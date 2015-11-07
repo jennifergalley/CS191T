@@ -51,9 +51,9 @@
       <!--Use class "active" to change pointer on navbar-->
       <a class="blog-nav-item" href="/browse" id="browse">Browse</a> 
       <a class="blog-nav-item" href="/view" id="view">View</a>
+      {{ if .LoggedIn }}
       <a class="blog-nav-item" href="/write" id="write">Write</a>
       <a class="blog-nav-item" href="/user/{{ .Username }}" id="profile">Profile</a>
-      {{ if .LoggedIn }}
       <a class="login btn btn-danger" href="/logout" id="logout">Logout</a>
       <a href="/user/{{ .Username }}"><span class="username">{{ .Username }}</span></a>
       {{ else }}
