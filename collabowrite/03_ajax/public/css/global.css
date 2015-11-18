@@ -79,4 +79,5 @@ span.username {
 
 p.form-field-err {
   color: red;
+  display: none;
 }

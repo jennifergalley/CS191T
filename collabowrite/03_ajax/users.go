@@ -83,7 +83,7 @@ func checkEmail(res http.ResponseWriter, req *http.Request, _ httprouter.Params)
 
 func createUser(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	ctx := appengine.NewContext(req)
-	hashedPass, err := bcrypt.GenerateFromPassword([]byte(req.FormValue("password")), bcrypt.DefaultCost)
+	hashedPass, err := bcrypt.GenerateFromPassword([]byte(req.FormValue("password1")), bcrypt.DefaultCost)
 	if err != nil {
 		log.Errorf(ctx, "error creating password: %v", err)
 		http.Error(res, err.Error(), 500)
@@ -192,3 +192,62 @@ func logout(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	http.Redirect(res, req, "/login", 302)
 }
 
+func editProfileProcess(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
+	ctx := appengine.NewContext(req)
+	sd := sessionInfo (req)
+	
+	user := User{
+		Username: sd.Username,
+		Email: req.FormValue("email"),
+		Name: req.FormValue("name"),
+		About: req.FormValue("about"),
+		Image: req.FormValue("image"),
+		Password: sd.Password,
+		JoinDate: sd.JoinDate,
+	}
+	key := datastore.NewKey(ctx, "Users", sd.Username, 0, nil)
+	key, err := datastore.Put(ctx, key, &user)
+	if err != nil {
+		http.Error(res, err.Error(), 500)
+		return
+	}
+		
+	createSession(res, req, user)
+
+	// redirect to profile page
+	http.Redirect(res, req, "/user/" + sd.Username, 302)
+}
+
+func editPassword(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
+	ctx := appengine.NewContext(req)
+	sd := sessionInfo (req)
+	
+	key := datastore.NewKey(ctx, "Users", sd.Username, 0, nil)
+	var user User
+	err := datastore.Get(ctx, key, &user)
+	if err != nil || bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.FormValue("password"))) != nil {
+		// wrong current password
+		http.Redirect(res, req, "/user/" + sd.Username, 302)
+		return
+	} else {
+		// correct current password
+		hashedPass, err := bcrypt.GenerateFromPassword([]byte(req.FormValue("password1")), bcrypt.DefaultCost)
+		if err != nil {
+			log.Errorf(ctx, "error creating password: %v", err)
+			http.Error(res, err.Error(), 500)
+			return
+		}
+		user.Password = string(hashedPass)
+		key = datastore.NewKey(ctx, "Users", sd.Username, 0, nil)
+		key, err = datastore.Put(ctx, key, &user)
+		if err != nil {
+			http.Error(res, err.Error(), 500)
+			return
+		}
+		
+		createSession(res, req, user)
+	}
+	
+	// redirect to profile page
+	http.Redirect(res, req, "/user/" + sd.Username, 302)
+}

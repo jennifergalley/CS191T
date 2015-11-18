@@ -6,7 +6,7 @@ type User struct {
 	Email    string
 	Name string
 	Username string `datastore:"-"`
-	Password string `json:"-"`
+	Password string
 	About string
 	Image string
 	JoinDate string

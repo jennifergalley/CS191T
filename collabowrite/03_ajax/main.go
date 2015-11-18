@@ -24,10 +24,13 @@ func init() {
 	r.GET("/login", login)
 	r.GET("/signup", signup)
 	r.GET("/logout", logout)
+	r.GET("/editProfile", editProfile)
 	r.POST("/api/checkemail", checkEmail)
 	r.POST("/api/checkusername", checkUserName)
 	r.POST("/api/login", loginProcess)
 	r.POST("/api/signup", createUser)
+	r.POST("/api/editProfile", editProfileProcess)
+	r.POST("/api/editPassword", editPassword)
 	http.Handle("/public/", http.StripPrefix("/public", http.FileServer(http.Dir("public/"))))
 
 	tpl = template.New("roottemplate")
@@ -49,11 +52,16 @@ func write(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	tpl.ExecuteTemplate(res, "write.html", &sd)
 }
 
-
 func cover(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	sd := sessionInfo (req)
 	tpl.ExecuteTemplate(res, "cover.html", &sd)
 }
+
+func editProfile(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
+	sd := sessionInfo (req)
+	tpl.ExecuteTemplate(res, "editProfile.html", &sd)
+}
+
 
 func sessionInfo(req *http.Request) SessionData {
 	// get session

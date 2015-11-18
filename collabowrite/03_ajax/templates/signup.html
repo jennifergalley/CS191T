@@ -7,7 +7,7 @@
         <p class="form-field-err" id="form-err"></p>
 
         <label for="name" class="sr-only">Name</label>
-        <input type="text" name="name" id="name" class="form-control" placeholder="John Doe" required autofocus>
+        <input type="text" name="name" id="name" class="form-control" placeholder="Full name" required autofocus>
         
         <label for="email" class="sr-only">Email address</label>
         <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
@@ -56,8 +56,10 @@
                     var item = xhr.responseText;
                     if (item == 'true') {
                         emailErr.textContent = `Email taken - Are you sure you don't have an account?`;
+                        document.getElementById("email-err").style.display = "block";
                     } else {
                         emailErr.textContent = '';
+                        document.getElementById("email-err").style.display = "none";
                     }
                 }
             });
@@ -73,8 +75,10 @@
                     var item = xhr.responseText;
                     if (item == 'true') {
                         usernameErr.textContent = `Username taken - Please choose another`;
+                        document.getElementById("username-err").style.display = "block";
                     } else {
                         usernameErr.textContent = '';
+                        document.getElementById("username-err").style.display = "none";
                     }
                 }
             });
@@ -87,10 +91,12 @@
             var err2 = emailErr.textContent;
             var ok = validatePasswords();
             if (!ok || err1 != '' || err2 != '') {
-                formErr.textContent = "There was an error submitting the form.";
                 e.preventDefault();
+                formErr.textContent = "There was an error submitting the form.";
+                document.getElementById("form-err").style.display = "block";
                 return;
             }
+            formErr.textContent = "";
         });
         
         
@@ -99,14 +105,17 @@
             pErr.textContent = '';
             if (p1.value === '') {
                 pErr.textContent = 'Enter a password.';
+                document.getElementById("password-err").style.display = "block";
                 return false;
             }
             if (p1.value !== p2.value) {
                 pErr.textContent = 'Your passwords did not match. Please re-enter your password.';
+                document.getElementById("password-err").style.display = "block";
                 p1.value = '';
                 p2.value = '';
                 return false;
             }
+            document.getElementById("password-err").style.display = "none";
             return true;
         };
     </script>

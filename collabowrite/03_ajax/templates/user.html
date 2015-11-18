@@ -52,7 +52,11 @@
 <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
     <div class="sidebar-module sidebar-module-inset no-background">
 		<h3>Profile Picture</h3>
-		<img src="{{ . }}" class="profile-pic-large" />	
+		{{ if . }}
+			<img src="{{ . }}" class="profile-pic-large" />	
+		{{ else }}
+			<img src="http://www.porticodesign.com/wp-content/uploads/2014/03/blank-person-07d1653f840307220b203ecb834f5904.png" class="profile-pic-large" />	
+		{{ end }}
 	</div>
 </div>
 {{ end }}
@@ -60,7 +64,11 @@
 
 {{ define "user-thumbnail" }}
 <div class="user-picture-thumbnail">
-	<img src="{{ . }}" class="profile-pic-small" />	
+	{{ if . }}
+		<img src="{{ . }}" class="profile-pic-small" />	
+	{{ else }}
+		<img src="http://www.porticodesign.com/wp-content/uploads/2014/03/blank-person-07d1653f840307220b203ecb834f5904.png" class="profile-pic-small" />	
+	{{ end }}
 </div>
 {{ end }}
 
@@ -70,7 +78,11 @@
 	<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
 		<div class="sidebar-module sidebar-module-inset">
 			<div class="user-picture-thumbnail margin-bottom">
-				<img src="{{ .Image }}" class="profile-pic-small" />	
+				{{ if .Image }}
+					<img src="{{ .Image }}" class="profile-pic-small" />	
+				{{ else }}
+					<img src="http://www.porticodesign.com/wp-content/uploads/2014/03/blank-person-07d1653f840307220b203ecb834f5904.png" class="profile-pic-small" />	
+				{{ end }}
 			</div>
 			<h4 class="about">About the Owner</h4>
 			<h5>{{ .Username }}</h5>
