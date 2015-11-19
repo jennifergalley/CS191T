@@ -1,0 +1,29 @@
+{{ template "header" . }}
+    <div class="container">
+
+      <div class="blog-header">
+        <h1 class="blog-title">{{ .ViewingStory.Title }}</h1>
+        <p class="lead blog-description">{{ .ViewingStory.Description }}</p>
+      </div>
+
+      <div class="row">
+
+        <div class="col-sm-8 blog-main">
+          {{ template "scene" }}
+        </div>
+
+        {{ template "about" .ViewingUser }}
+        {{ template "blog-links" }}
+
+      </div>
+
+    </div>
+
+   {{ template "blog-footer" }}
+   
+   {{ template "footer" }}
+   
+<!--Use class "active" to change pointer on navbar-->
+<!--<script>
+  document.getElementById("view").setAttribute("class", "active blog-nav-item");
+</script>-->
