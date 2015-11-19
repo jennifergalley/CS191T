@@ -1,0 +1,11 @@
+{
+  "type": "service_account",
+  "private_key_id": "5737485e8364328b380ccd2b235dcf647180ccf3",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDHt1qV86wrakxP\npNoA4/2WUdPoz70Vusi1XgEB8eKbCi/F5pR9Oa5B7OTppN3r990HZM+nYKIbO52a\nqzRAmV0Mt15fr+QVIXcKswyBLPoP6qqiEQYCmFDXT1qrCydzIaGPa6fQhbotomzG\nzRG8Xnx/mElsw1QWI2600MZ+nNhDEsFdM+14QoC7UbvisgwHuPcSpg3KumXyAixM\n5HR8Jxdf7AkNoO71IpT7uzXqd2LEPz2er2gGhUWytYbRuMe1N1MRvodV50uMcFsz\nkJeB/HVhojmCDpFQVXSgghv7oIAUQ5t+joZtl1X514dbCnIx8pxpgoqf0A+Qzbgr\nydbKEIAhAgMBAAECggEBAKfGCQw1YqoqJyc09oqO/MYdwaYvdcneWqO576DBobra\n6N0YYh98qD3rkzYP8Po9A+olLyiNzkCQaUq4jjHCZF+9X0OFEFcMAOP1HAkcTom2\nelehc2oUqLznheRwf1iBpSZFqvlKjeeuLjEnrsGOoonR1cTPpkDezS6KwGU2v5o/\nl+qU3FW29RLslDJE5DqDxtBRw9XduPYdRt/pDGTdKyiOhTg2yT2O9f5DqlUTjoH9\nt5qAiKP9B6kpuEDr85erUm/0uJ3yv4WWDJ7+i1MuulNT4FhdRSM8m8hrfeNLqG2t\nP6+wvyOeKz7sT9dmZNo1DU2x+VskVWBmj/uimZgkn/0CgYEA7RR5V1mMBiEGrIAp\nYlwqiirrnY4z2aDE6sAJKhHYQtTTNDGH7R67RofN+C8DOmdHoW9D+mWyAq1w83FL\nGWe14cQl3TMnsNoUZbAKb9S+By8EPAGJrk7xiB1xqyKtiU1vob4VbPSCwMS0XAGu\nBJ6MZx0vK3QfrbyVYhPYNN1m8/8CgYEA16eKkAtmgtCiLOJxWIvSHyiSse6O5T4h\nuo23mfAtAb3aI1LFtPMr5/fU90YI+/HeqlCz9OaK65xm0yuWCPC2dJ8xJV05TcbO\ninHv925BkkkJutcKnru6DcXFNW6c28XuniiSqShe6EvOw/lTXm2jTQEmRt6pBztN\nyzWj2kcaC98CgYEAhPnB4ZupbVqi2qh8Dd5yQdM3GsVDEeMZ8C3MNhuSOFIVMKZD\nfl2JX1MW1QjRf7WkOMkm0NCvms7blsBKBjLkkoApWLuznH+Fh0/JWtZxy6e0cU/P\ngMRotxcExZ+KxIN5hLgQXm9601LBcwXCLHcde0ykQ3Q7vIAVLdDBqU0xzNMCgYBr\nTxg48yNQZsa8NPWXzQOCs6rDVWTPl6oq7Uf2FrgejL0WJKLylqo7ZGwZm0TvMXzO\nHRhe/bUU5p+X5rFiw3zW7TwETq4sEIhIBcgVxExmoWdxDH5hXCKJpeaq3t640XYa\nRzArckY/qzE4/UDJ1R6UO8UzMKrFSXI9cvSUshq42wKBgHFmIrW8Ehei5SyvbbEc\nOKXRHP16ZZYFoWG6mV1FBhDZNpGiw4xe9f2vszGMVCaU7iVWjlK1w8BngbNVhNZI\nEW++sxrwxUGFt0EA5D1axS4gkYOpxQlxGNy/ntPWKfqopO9sjz3Dozui8PhHvHwv\nZNstlHpPuRr7sAQIQVSYMV62\n-----END PRIVATE KEY-----\n",
+  "client_email": "account-1@collabo-write.iam.gserviceaccount.com",
+  "client_id": "109001495208875407182",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/account-1%40collabo-write.iam.gserviceaccount.com"
+}
