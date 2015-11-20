@@ -1,34 +1,25 @@
 {{ template "header" }}
 
-    <div class="container form-signup">
+    <div class="container margin-top">
 
-      <form class="form-signup" id="form-create-user" action="/api/signup" method="post">
-        <h2 class="form-signup-heading">Create an account</h2>
+      <form class="form" id="form-create-user" action="/api/signup" method="post">
+        <h2 class="form-heading">Create an account</h2>
         <p class="form-field-err" id="form-err"></p>
 
-        <label for="name" class="sr-only">Name</label>
-        <input type="text" name="name" id="name" class="form-control" placeholder="Full name" required autofocus>
-        
-        <label for="email" class="sr-only">Email address</label>
-        <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" required autofocus>
         <p class="form-field-err" id="email-err"></p>
 
-        <label for="password1" class="sr-only">Password</label>
-        <input type="password" name="password1" id="password1" class="form-control" placeholder="Password" required>
-        
-        <label for="password2" class="sr-only">Re-enter Password</label>
-        <input type="password" name="password2" id="password2" class="form-control" placeholder="Password" required>
-        <p class="form-field-err" id="password-err"></p>
-
-        <label for="username" class="sr-only">Username</label>
         <input type="text" name="username" id="username" class="form-control" placeholder="Username" required autofocus>
         <p class="form-field-err" id="username-err"></p>
         
-        <label for="about" class="sr-only">About</label>
-        <textarea id="about" name="about" class="form-control" placeholder="About me" autofocus></textarea>
+        <input type="password" name="password1" id="password1" class="form-control" placeholder="Password" required>
         
-        <label for="image" class="sr-only">Profile Picture</label>
-        <input type="url" name="image" id="image" class="form-control" placeholder="Profile picture URL" autofocus>
+        <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirm Password" required>
+        <p class="form-field-err" id="password-err"></p>
+
+        <textarea id="about" name="about" class="form-control" placeholder="About Me" autofocus></textarea>
+        
+        <input type="url" name="image" id="image" class="form-control" placeholder="Profile Picture URL" autofocus>
         
         <button class="btn btn-lg btn-success btn-block" type="submit" id="btn-create-account">Create</button>
       </form>

@@ -7,11 +7,14 @@
   </div>
 
   <div class="row">
-    <form action="/api/story" method="post" class="scene-form">
-      <input type="text" name="story" placeholder="Story Name">
-      <input type="text" name="description" placeholder="Story Description">
-      <button class="btn btn-primary" type="submit">Submit</button>
-    </form>	
+    <div class="container">
+      <form action="/api/story" method="post" class="form">
+        <input type="text" name="story" class="form-control" placeholder="Story Name" required>
+        <input type="text" name="description" class="form-control" placeholder="Story Description">
+        <textarea name="plot" class="form-control" rows="5" placeholder="Story Plot"></textarea>
+        <button class="btn btn-primary form-control" type="submit">Submit</button>
+      </form>
+    </div>
   </div>
 
 </div>

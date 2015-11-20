@@ -1,17 +1,11 @@
 {{ define "user-profile" }}
 <table class="user-profile table">
-	<tr>
-		<td><strong>Username</strong></td>
-		<td>{{ .Username }}</td>
-	</tr>
-	<tr>
-		<td><strong>Name</strong></td>
-		<td>{{ .Name }}</td>
-	</tr>
-	<tr>
-		<td><strong>Email</strong></td>
-		<td>{{ .Email }}</td>
-	</tr>
+	{{ if .IsMe }}
+		<tr>
+			<td><strong>Email</strong></td>
+			<td>{{ .Email }}</td>
+		</tr>
+	{{ end }}
 	<tr>
 		<td><strong>About</strong></td>
 		<td>{{ .About }}</td>
@@ -20,8 +14,8 @@
 		<td><strong>Stories</strong></td>
 		<td>
 			<ul>
-				{{ range .Stories }}
-				<li><a href="/view/{{ .Link }}" class="blog-link">{{ .Title }}</a></li>
+				{{ range .OwnerStories }}
+					<li><a href="/view/{{ .Link }}/{{ .Owner }}" class="blog-link">{{ .Title }}</a></li>
 				{{ end }}
 			</ul>
 		</td>
@@ -30,9 +24,9 @@
 		<td><strong>Contributing to</strong></td>
 		<td>
 			<ul>
-				<li><a href="/view" class="blog-link">Story 1</a></li>
-				<li><a href="/view" class="blog-link">Story 2</a></li>
-				<li><a href="/view" class="blog-link">Story 3</a></li>
+				{{ range .ContributingStories }}
+					<li><a href="/view/{{ .Link }}/{{ .Owner }}" class="blog-link">{{ .Title }}</a></li>
+				{{ end }}
 			</ul>
 		</td>
 	</tr>
@@ -45,20 +39,22 @@
 		<td></td>
 	</tr>
 </table>
+
+{{ if .IsMe }}
+<div class="edit-profile">
+	<a class="btn btn-primary" href="/editProfile" class="edit-profile">Edit</a> 
+</div>
+{{ end }}
+
 {{ end }}
 
 
 {{ define "user-picture" }}
-<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-    <div class="sidebar-module sidebar-module-inset no-background">
-		<h3>Profile Picture</h3>
-		{{ if . }}
-			<img src="{{ . }}" class="profile-pic-large" />	
-		{{ else }}
-			<img src="http://www.porticodesign.com/wp-content/uploads/2014/03/blank-person-07d1653f840307220b203ecb834f5904.png" class="profile-pic-large" />	
-		{{ end }}
-	</div>
-</div>
+	{{ if . }}
+		<img src="{{ . }}" class="profile-pic-large" />	
+	{{ else }}
+		<img src="http://www.porticodesign.com/wp-content/uploads/2014/03/blank-person-07d1653f840307220b203ecb834f5904.png" class="profile-pic-large" />	
+	{{ end }}
 {{ end }}
 
 
@@ -84,8 +80,8 @@
 					<img src="http://www.porticodesign.com/wp-content/uploads/2014/03/blank-person-07d1653f840307220b203ecb834f5904.png" class="profile-pic-small" />	
 				{{ end }}
 			</div>
-			<h4 class="about">About the Owner</h4>
-			<h5>{{ .Username }}</h5>
+			<h2 class="about">About the Owner</h2>
+			<h3>{{ .Username }}</h3>
 			<p>{{ .About }}</p>
 		</div>
 	</div>

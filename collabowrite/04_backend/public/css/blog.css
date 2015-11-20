@@ -23,9 +23,9 @@
   font-size: 60px;
   font-weight: normal;
 }
-.blog-description {
+.blog-description, .blog-plot {
   font-size: 20px;
-  color: #999;
+  /*color: #999;*/
 }
 
 
@@ -98,4 +98,16 @@
 }
 .blog-footer p:last-child {
   margin-bottom: 0;
+}
+
+/*
+* Blog links
+*/
+a.blog-link, a.author-link {
+  color: #555;
+}
+
+a.blog-link:hover, a.author-link:hover  {
+  text-decoration: none;
+  color: black;
 }

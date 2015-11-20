@@ -23,7 +23,7 @@ func init() {
 	r.GET("/browse", browse)
 	r.GET("/newStory", newStory)
 	r.GET("/newScene", newScene)
-	r.GET("/user/:name", profile)
+	r.GET("/user/:username", viewProfile)
 	r.GET("/login", login)
 	r.GET("/signup", signup)
 	r.GET("/logout", logout)

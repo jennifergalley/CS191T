@@ -14,17 +14,16 @@
 <!-- Bootstrap core CSS -->
 <link href="/public/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- Custom styles for this template -->
+<!-- Stylesheets -->
 <link href="/public/css/global.css" rel="stylesheet">
+<link href="/public/css/nav.css" rel="stylesheet">
 <link href="/public/css/cover.css" rel="stylesheet">
 <link href="/public/css/blog.css" rel="stylesheet">
-<link href="/public/css/login.css" rel="stylesheet">
-
-<!-- My Stylesheet -->
-<link href="/public/css/style.css" rel="stylesheet">
+<link href="/public/css/user.css" rel="stylesheet">
+<link href="/public/css/forms.css" rel="stylesheet">
 
 <!-- Favicon -->
-<link rel="icon" href="favicon.ico">
+<link rel="icon" href="/favicon.ico">
 
 <!-- Google font -->
 <link href='https://fonts.googleapis.com/css?family=Handlee' rel='stylesheet' type='text/css'>
@@ -45,22 +44,39 @@
 
 {{ define "navbar" }}
 <div class="blog-masthead">
-  <a href="/"><span class="collabowrite">Collabowrite</span></a>
-  <div class="container nav-container">
+  <div class="container-fluid">
     <nav class="blog-nav">
-      <!--Use class "active" to change pointer on navbar-->
-      <a class="blog-nav-item" href="/browse" id="browse">Browse</a> 
-      <!--<a class="blog-nav-item" href="/view" id="view">View</a>-->
-      {{ if .LoggedIn }}
-      <a class="blog-nav-item" href="/newScene" id="newScene">New Scene</a>
-      <a class="blog-nav-item" href="/newStory" id="newStory">New Story</a>
-      <a class="blog-nav-item" href="/user/{{ .Username }}" id="profile">Profile</a>
-      <a class="login btn btn-danger" href="/logout" id="logout">Logout</a>
-      <a href="/user/{{ .Username }}"><span class="username">{{ .Username }}</span></a>
-      {{ else }}
-      <a class="signup btn btn-success" href="/signup" id="signup">Signup</a>
-      <a class="login btn btn-primary" href="/login" id="login">Login</a>
-      {{ end }}
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Collabowrite</a>
+      </div>
+      
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li><a class="blog-nav-item" href="/browse" id="browse">Browse</a></li>
+          {{ if .LoggedIn }}
+            <li><a class="blog-nav-item" href="/newScene" id="newScene">New Scene</a></li>
+            <li><a class="blog-nav-item" href="/newStory" id="newStory">New Story</a></li>
+          {{ end }}
+        </ul>
+        
+        <div class="navbar-right">
+          <ul class="nav navbar-nav">
+            {{ if .LoggedIn }}
+              <li><a href="/user/{{ .Username }}" class="username">{{ .Username }}</a></li>
+              <li><a class="login btn btn-danger" href="/logout" id="logout">Logout</a></li>
+            {{ else }}
+              <li><a class="signup btn btn-success" href="/signup" id="signup">Signup</a></li>
+              <li><a class="login btn btn-primary" href="/login" id="login">Login</a></li>
+            {{ end }}
+          </ul>
+        </div>
+      </div>
     </nav>
   </div>
 </div>

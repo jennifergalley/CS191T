@@ -40,6 +40,7 @@ func newStoryProcess(res http.ResponseWriter, req *http.Request, _ httprouter.Pa
 		Owner: sd.Username,
 		Title: req.FormValue("story"),
 		Description: req.FormValue("description"),
+		Plot: req.FormValue("plot"),
 		Link: strings.Replace(req.FormValue("story"), " ", "-", -1),
 		CreatedDate: s,
 	}
@@ -57,7 +58,7 @@ func newStoryProcess(res http.ResponseWriter, req *http.Request, _ httprouter.Pa
 	http.Redirect(res, req, "/browse", 302)
 }
 
-func getUserStories(user User, req *http.Request) []Story {
+func getOwnerStories(user User, req *http.Request) []Story {
 	ctx := appengine.NewContext(req)
 	userkey := datastore.NewKey(ctx, "Users", user.Username, 0, nil)
 	q := datastore.NewQuery("Stories").Ancestor(userkey)

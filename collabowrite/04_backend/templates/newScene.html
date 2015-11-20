@@ -7,17 +7,18 @@
   </div>
 
   <div class="row">
-    <form action="/api/scene" method="post" class="scene-form">
-      <!--<label for="story"><strong>Story</strong></label>-->
-      <select name="story">
-        <option value="story1">Story 1</option>
-        <option value="story2">Story 2</option>
-        <option value="story3">Story 3</option>
-      </select>
-      <input type="text" name="scene" placeholder="Scene Name">
-      <textarea class="form-control" name="scene"></textarea>
-      <button class="btn btn-primary" type="submit">Submit</button>
-    </form>	
+    <div class="container">
+      <form action="/api/scene" method="post" class="scene-form">
+        <select name="story" class="form-control">
+          {{ range .OwnerStories }}
+          <option value="{{ .Title }}">{{ .Title }}</option>
+          {{ end }}
+        </select>
+        <input type="text" name="scene" class="form-control" placeholder="Scene Name">
+        <textarea class="form-control" rows="15" name="scene" placeholder="Scene Content"></textarea>
+        <button class="btn btn-primary form-control" type="submit">Submit</button>
+      </form>	
+    </div>
   </div>
 
 </div>
