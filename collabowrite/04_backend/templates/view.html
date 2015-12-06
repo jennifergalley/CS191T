@@ -12,7 +12,9 @@
       <div class="row">
 
         <div class="col-sm-8 blog-main">
-          {{ template "scene" }}
+          {{ range .ViewingScenes }}
+            {{ template "scene" . }}
+          {{ end }}
         </div>
 
         {{ template "about" .ViewingUser }}

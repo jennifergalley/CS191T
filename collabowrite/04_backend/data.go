@@ -1,7 +1,5 @@
 package main
 
-import "time"
-
 type User struct {
 	Email    string
 	Username string `datastore:"-"`
@@ -21,13 +19,15 @@ type SessionData struct {
 	Debugging string
 	ViewingUser User
 	ViewingStory Story
+	ViewingScenes []Scene
 	Stories []Story
 }
 
 type Scene struct {
-	Text string
-	Time time.Time
-	Username string
+	Content string
+	Name string
+	CreatedDate string
+	Author string
 }
 
 type Story struct {

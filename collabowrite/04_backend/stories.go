@@ -17,11 +17,6 @@ func browse(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	tpl.ExecuteTemplate(res, "browse.html", &sd)
 }
 
-func newScene(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
-	sd := sessionInfo (req)
-	tpl.ExecuteTemplate(res, "newScene.html", &sd)
-}
-
 func newStory(res http.ResponseWriter, req *http.Request, _ httprouter.Params) {
 	sd := sessionInfo (req)
 	tpl.ExecuteTemplate(res, "newStory.html", &sd)
@@ -82,10 +77,6 @@ func getAllStories(req *http.Request) []Story {
 	return stories
 }
 
-func newSceneProcess(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
-
-}
-
 func viewStory(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	ctx := appengine.NewContext(req)
 	sd := sessionInfo(req)
@@ -108,6 +99,8 @@ func viewStory(res http.ResponseWriter, req *http.Request, ps httprouter.Params)
 		panic(err)
 	}
 	
+	scenes := getStoryScenes(story, req)
+	sd.ViewingScenes = scenes
 	sd.ViewingStory = story
 	sd.ViewingUser = user
 	tpl.ExecuteTemplate(res, "view.html", &sd)
