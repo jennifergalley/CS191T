@@ -28,7 +28,7 @@ func newStoryProcess(res http.ResponseWriter, req *http.Request, _ httprouter.Pa
 	
 	t := time.Now()
 	// y, m, d := t.Date()
-	time := t.UTC()
+	time := t.Local()
 	s := fmt.Sprintf ("%v", time)
 	
 	story := Story{

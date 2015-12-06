@@ -22,7 +22,7 @@ func newSceneProcess(res http.ResponseWriter, req *http.Request, _ httprouter.Pa
 	sd := sessionInfo (req)
 	
 	t := time.Now()
-	time := t.UTC()
+	time := t.Local()
 	s := fmt.Sprintf ("%v", time)
 	
 	scene := Scene{
